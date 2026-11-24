@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#182b2a">
+<title>测测你的灵魂是哪种中国古风人格</title>
+<style>
+:root{--ink:#20312f;--jade:#315b50;--jade2:#52796b;--gold:#bd9858;--paper:#f5f0e5;--muted:#7d8177;--line:#ded5c3;--white:#fffdf8}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--paper);color:var(--ink);font-family:"PingFang SC","Microsoft YaHei",serif;min-height:100vh}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.18;background-image:radial-gradient(#a99772 .6px,transparent .6px);background-size:7px 7px}
+.shell{width:min(900px,100% - 32px);margin:0 auto;padding:28px 0 60px;position:relative}
+.topline{display:flex;justify-content:space-between;align-items:center;color:var(--muted);font-size:12px;letter-spacing:3px}
+.seal{border:1px solid var(--gold);color:var(--gold);padding:6px 10px;letter-spacing:2px}
+.panel{background:var(--white);border:1px solid var(--line);box-shadow:0 18px 55px #403b2b12;position:relative;overflow:hidden}
+.panel:after{content:"";position:absolute;inset:10px;border:1px solid #bd985833;pointer-events:none}
+.hero{margin-top:22px;padding:clamp(34px,7vw,76px) clamp(22px,7vw,72px);text-align:center;background:linear-gradient(135deg,#fdfbf4,#eee7d8)}
+.kicker{font-size:12px;letter-spacing:5px;color:var(--jade2)}
+h1{font-size:clamp(30px,6vw,54px);line-height:1.28;letter-spacing:3px;margin:22px 0 14px;font-weight:600}
+.subtitle{color:#77786d;line-height:1.9;font-size:14px;max-width:520px;margin:0 auto}
+.motif{font-size:38px;color:var(--gold);margin:24px 0 18px;letter-spacing:12px}
+.btn{border:0;background:var(--jade);color:#fffdf8;padding:14px 34px;font:inherit;letter-spacing:3px;cursor:pointer;transition:.25s;position:relative;z-index:1}
+.btn:hover{background:#203f37;transform:translateY(-2px);box-shadow:0 8px 20px #203f3730}
+.note{font-size:12px;color:#999487;margin-top:18px}
+.hide{display:none!important}
+.quiz{margin-top:22px;padding:clamp(24px,5vw,52px)}
+.quizhead{display:flex;justify-content:space-between;gap:12px;align-items:center;font-size:13px;color:var(--muted);position:relative;z-index:1}
+.progress{height:5px;background:#e9e2d5;margin:16px 0 38px;position:relative;z-index:1}
+.progress span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--jade2),var(--gold));transition:width .35s}
+.qnum{color:var(--gold);font-size:12px;letter-spacing:3px}
+.question{font-size:clamp(21px,4vw,29px);line-height:1.55;margin:12px 0 28px;position:relative;z-index:1}
+.options{display:grid;grid-template-columns:1fr 1fr;gap:12px;position:relative;z-index:1}
+.option{border:1px solid var(--line);background:#fffefa;padding:18px 17px;text-align:left;min-height:78px;color:var(--ink);font:inherit;line-height:1.6;cursor:pointer;transition:.2s}
+.option b{display:inline-grid;place-items:center;width:25px;height:25px;border:1px solid #c9b98f;color:var(--gold);font-size:12px;font-weight:400;margin-right:10px}
+.option:hover{border-color:var(--jade2);background:#f2f5ef;transform:translateY(-2px)}
+.option:focus-visible,.btn:focus-visible{outline:3px solid #bd9858;outline-offset:3px}
+.controls{display:flex;justify-content:space-between;align-items:center;margin-top:30px;position:relative;z-index:1}
+.back{border:0;background:transparent;color:var(--muted);cursor:pointer;font:inherit;padding:10px}
+.result{margin-top:22px;padding:clamp(24px,6vw,58px);text-align:center}
+.result .eyebrow{letter-spacing:5px;color:var(--gold);font-size:12px}
+.result h2{font-size:clamp(34px,7vw,58px);margin:16px 0 8px;letter-spacing:5px}
+.result .tagline{font-size:17px;color:var(--jade2);line-height:1.8;margin:12px auto 26px;max-width:600px}
+.result-mark{width:94px;height:94px;border:1px solid var(--gold);border-radius:50%;display:grid;place-items:center;margin:0 auto 22px;font-size:43px;color:var(--gold);background:#f8f3e8}
+.result-copy{max-width:650px;margin:0 auto;text-align:left;position:relative;z-index:1}
+.result-copy p{line-height:1.9;color:#62685f}
+.result-copy h3{font-size:15px;letter-spacing:2px;color:var(--jade);margin:24px 0 6px}
+.quote{border-left:3px solid var(--gold);padding:12px 18px;background:#f6f1e7;font-size:18px;line-height:1.8;margin:25px 0}
+.result-actions{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-top:30px;position:relative;z-index:1}
+.btn.secondary{background:transparent;color:var(--jade);border:1px solid var(--jade)}
+.foot{text-align:center;color:#999487;font-size:11px;letter-spacing:2px;margin-top:26px}
+@media(max-width:600px){.shell{width:calc(100% - 20px);padding-top:16px}.topline{letter-spacing:1px}.options{grid-template-columns:1fr;gap:9px}.option{min-height:65px;padding:14px}.quiz{padding:22px 18px}.progress{margin-bottom:28px}.controls{margin-top:22px}.hero{padding:42px 22px}.result{padding:28px 20px}.result-copy{text-align:left}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<main class="shell">
+  <div class="topline"><span>东方性格图鉴 · PERSONALITY ATLAS</span><span class="seal">闲趣一测</span></div>
+  <section id="home" class="panel hero">
+    <div class="kicker">一念之间 · 自有山河</div>
+    <h1>测测你的灵魂<br>是哪种中国古风人格</h1>
+    <p class="subtitle">若把日常的你放进一卷东方长卷，<br>你会是运筹帷幄的人、自在山水间的人，还是仗剑而行的人？</p>
+    <div class="motif">☯　❧　☯</div>
+    <button class="btn" id="start">开启心性之旅</button>
+    <div class="note">40道生活选择题 · 约5分钟 · 无标准答案</div>
+  </section>
+
+  <section id="quiz" class="panel quiz hide" aria-live="polite">
+    <div class="quizhead"><span>循心而答，不必斟酌</span><span id="counter">01 / 40</span></div>
+    <div class="progress"><span id="bar"></span></div>
+    <div class="qnum" id="qnum">QUESTION 01</div>
+    <div class="question" id="question"></div>
+    <div class="options" id="options"></div>
+    <div class="controls"><button class="back" id="prev">← 上一题</button><span class="note">选最像当下自己的答案</span></div>
+  </section>
+
+  <section id="result" class="panel result hide" aria-live="polite">
+    <div class="eyebrow">YOUR EASTERN ARCHETYPE</div>
+    <div class="result-mark" id="resultIcon">✧</div>
+    <div class="eyebrow">你的灵魂画像</div>
+    <h2 id="resultName"></h2>
+    <div class="tagline" id="tagline"></div>
+    <div class="result-copy">
+      <div class="quote" id="quote"></div>
+      <h3>性格画像</h3><p id="traits"></p>
+      <h3>为什么与你相遇</h3><p id="reason"></p>
+      <h3>你的隐藏优势</h3><p id="strength"></p>
+      <h3>趣味彩蛋</h3><p id="easter"></p>
+    </div>
+    <div class="result-actions">
+      <button class="btn" id="again">再测一次</button>
+      <button class="btn secondary" id="share">复制结果文案</button>
+    </div>
+    <div class="note" id="shareHint">小提示：可截图保存，分享你的古风人格。</div>
+  </section>
+  <div class="foot">仅供趣味娱乐 · 不构成心理测评或人格诊断</div>
+</main>
+<script>
+const types = {
+  strategist:{name:"运筹者",icon:"♟",tag:"先看棋局，再落一子。",quote:"“你不一定站在聚光灯下，但常常是那个看清全局的人。”",traits:"你习惯先观察、再判断，遇事喜欢理清脉络。比起一时热闹，你更在意事情能否稳妥推进；擅长把复杂问题拆成可执行的小步骤。",reason:"你的选择多次体现出规划意识、信息整合和冷静权衡。你愿意为长远目标暂缓即时满足，也常能在混乱中找到关键线索。",strength:"把零散信息连成地图；在关键时刻保持清醒；为团队提供可落地的路径。",easter:"你的随身物品大概不是锦囊，而是一份写满备选方案的小册子。"},
+  wanderer:{name:"逍遥客",icon:"☁",tag:"心有天地，何处不是自在。",quote:"“不困于一时得失，自有一方开阔天地。”",traits:"你重视自由和体验，不喜欢被过度安排。面对变化，你往往先感受、再行动；懂得给自己留白，也能从平凡日子里发现乐趣。",reason:"你的答案呈现出开放、灵活和重视内在感受的倾向。比起按部就班，你更愿意保留选择空间，顺着好奇心探索新可能。",strength:"适应变化、跳出惯性思维、为生活注入新鲜感。",easter:"如果古人有周末，你大概会把行程写成：看天气，随缘。"},
+  poet:{name:"风雅诗人",icon:"✿",tag:"心细如诗，日常皆有回响。",quote:"“别人看见寻常，你看见了其中的光。”",traits:"你对氛围、细节和情绪变化比较敏锐。你珍惜有质感的体验，也愿意用文字、音乐或审美表达感受。温柔并不意味着软弱，你有自己的精神秩序。",reason:"你的选择透露出细腻的观察力和表达欲。你会留意别人忽略的小细节，也愿意为喜欢的事物投入时间。",strength:"捕捉细节、共情表达、把抽象感受转化成创意。",easter:"你的相册里可能有很多天空、窗影、晚霞，以及“当时觉得很美”的瞬间。"},
+  hero:{name:"江湖侠客",icon:"⚔",tag:"心中有尺，脚下有路。",quote:"“路见不平时，你很难假装什么都没看见。”",traits:"你看重原则、行动和真诚。遇到需要承担的事，通常不喜欢只停留在讨论；你愿意保护在意的人，也希望关系里少些拐弯抹角。",reason:"你的答案常落在主动解决、直率沟通和守住底线上。你更相信行动能带来改变，也愿意为重要的人和事付出。",strength:"执行力、担当意识、在关键时刻挺身而出。",easter:"朋友遇到麻烦时，你的第一反应可能是：“地址发我，先把事解决。”"},
+  artisan:{name:"匠心家",icon:"⚱",tag:"把寻常小事，做出自己的章法。",quote:"“不求一步登天，只把手边这一件做好。”",traits:"你重视过程和品质，喜欢把事情打磨到满意。你不一定追求声势，但在细节上有自己的标准；稳定、耐心和持续投入是你的底色。",reason:"你的选择体现出专注、务实和对完成度的在意。你倾向于通过练习与积累建立可靠感，而不是只靠灵光一闪。",strength:"持续精进、稳定交付、发现并修正细节问题。",easter:"你可能会为了一个小功能或一道菜，默默优化到第三个版本。"},
+  hermit:{name:"山林隐士",icon:"☘",tag:"不争一时喧闹，自有内心山水。",quote:"“独处不是退场，而是给心灵留一间书房。”",traits:"你需要独处来恢复能量，喜欢有边界、有节奏的生活。你不急着表达所有想法，更倾向于深度思考；少而真诚的关系，比热闹更重要。",reason:"你的回答显示出较强的内在驱动和边界意识。你会筛选值得投入的事情，也懂得在适当时候从喧嚣中抽身。",strength:"专注思考、独立判断、沉淀长期积累。",easter:"理想的社交活动可能是：三五好友，一壶茶，且不必赶场。"},
+  pioneer:{name:"开拓者",icon:"☀",tag:"看见新路，就想亲自走一遍。",quote:"“你不是等风来的人，你会先试着扬帆。”",traits:"你对新事物有好奇心，喜欢尝试、推动和打开局面。遇到机会时，你愿意迈出第一步；即使计划尚不完美，也能边做边调整。",reason:"你的选项多次指向主动探索、拥抱变化和承担不确定性。你不满足于重复熟悉路径，喜欢创造新的可能。",strength:"启动项目、鼓舞行动、在变化中寻找机会。",easter:"你的待办清单里，可能永远有一项叫“研究一下新东西”。"},
+  host:{name:"温润知己",icon:"茶",tag:"让人安心，是一种不动声色的力量。",quote:"“你未必说得最多，却常是大家愿意靠近的人。”",traits:"你重视关系中的舒适感与信任，擅长倾听，也愿意照顾不同人的感受。你不喜欢无谓冲突，但在重要问题上并非没有立场。",reason:"你的选择体现出协调、体察和维系关系的倾向。你会考虑他人的处境，也懂得用合适的方式让事情继续向前。",strength:"倾听沟通、缓和紧张、建立长期信任。",easter:"聚会结束后，大家可能会默契地把“下次再约”的组织工作交给你。"}
+};
+const raw = [
+["临时收到一项新任务，你通常先做什么？",["把目标拆开，排出步骤","先弄清自己是否真的想做","找一个安静角落想清楚","马上动手，边做边调整"],["strategist","wanderer","hermit","pioneer"]],
+["朋友聚会时，你更常扮演什么角色？",["帮大家协调时间地点","负责抛出新鲜话题","认真听每个人分享","把气氛带热，提议下一站"],["host","pioneer","hermit","hero"]],
+["周末计划突然被打乱，你会？",["迅速安排一个替代方案","觉得也不错，顺其自然","有点失落，想独处一会儿","拉上朋友临时开启新计划"],["strategist","wanderer","hermit","pioneer"]],
+["面对一件喜欢但不熟悉的事，你会？",["先研究方法和资料","直接体验，感受最重要","慢慢练习，打好基础","约上同伴一起尝试"],["strategist","wanderer","artisan","host"]],
+["工作或学习中遇到分歧，你倾向于？",["整理依据，逐条讨论","先理解每个人在意什么","坚持原则，直接说清","换个角度提出新方案"],["strategist","host","hero","pioneer"]],
+["走进一家陌生书店，你最可能？",["先看分类和推荐榜","随手翻一本封面吸引我的","找一个角落慢慢读","留意设计、纸张和装帧"],["strategist","wanderer","hermit","artisan"]],
+["当你压力较大时，最有效的恢复方式是？",["列出问题并逐一处理","去户外走走，换换环境","听音乐、写点东西","找信任的人聊一聊"],["strategist","wanderer","poet","host"]],
+["别人误解了你的意思，你会？",["补充事实，让逻辑更清楚","不太纠结，时间会说明","认真解释自己的感受","当面沟通，不让误会发酵"],["strategist","hermit","poet","hero"]],
+["旅行时你更喜欢怎样安排？",["路线清晰，留有备选","不设太多限制，随心走","慢下来，观察当地生活","挑战一条少有人走的路线"],["strategist","wanderer","poet","pioneer"]],
+["收到一份礼物，你最在意？",["对方是否花心思挑选","它是否带来新奇体验","是否有独特审美和故事","是否实用、做工扎实"],["host","wanderer","poet","artisan"]],
+["团队合作时，最让你有成就感的是？",["把复杂事情统筹完成","让每个人都发挥所长","做出质量很高的成果","推动一个新想法落地"],["strategist","host","artisan","pioneer"]],
+["遇到排队很久的热门店，你会？",["评估等待是否值得","转身探索附近小店","观察店铺布置和菜单","问问店员有没有更快选择"],["strategist","wanderer","poet","hero"]],
+["你更欣赏哪种做事方式？",["谋定而后动","保持弹性和自由","精益求精","敢想敢试"],["strategist","wanderer","artisan","pioneer"]],
+["朋友向你倾诉烦恼，你通常？",["帮他分析可行办法","陪着走走，不急着给建议","认真听出话里的情绪","如果需要，我会陪他行动"],["strategist","host","poet","hero"]],
+["面对一项长期目标，你更依靠？",["阶段计划和复盘","兴趣带来的持续动力","日复一日的练习","先迈出第一步再说"],["strategist","wanderer","artisan","pioneer"]],
+["你最容易被什么打动？",["一个精妙的解决方案","辽阔自然带来的自由感","一句恰到好处的话","有人在关键时刻守信用"],["strategist","wanderer","poet","hero"]],
+["在热闹场合待了很久，你会？",["找机会安静整理思绪","还想认识更多有趣的人","享受氛围，但适时照顾朋友","观察大家互动的细节"],["hermit","pioneer","host","poet"]],
+["看到一个新工具或新应用，你会？",["先看功能和评价","马上下载试一试","研究它的设计细节","想想能否改善现有流程"],["strategist","pioneer","artisan","host"]],
+["做决定时，你最不愿意牺牲？",["判断的准确性","个人选择的空间","内心真正的感受","重要的原则"],["strategist","wanderer","poet","hero"]],
+["你理想中的居住空间更接近？",["整洁有序，功能清楚","开阔通透，随时能出发","有书、有光、有喜欢的物件","温暖舒适，适合朋友来访"],["artisan","wanderer","poet","host"]],
+["遇到突发状况，你通常？",["先判断最关键的风险","保持灵活，随机应变","稳住节奏，一件件处理","先站出来承担责任"],["strategist","wanderer","artisan","hero"]],
+["你更愿意把空闲时间花在哪？",["学习一项有用技能","探索没去过的地方","创作、阅读或欣赏艺术","和重要的人好好相处"],["artisan","pioneer","poet","host"]],
+["别人最可能因为什么来找你？",["帮忙分析问题","一起尝试新鲜事","听我分享灵感或感受","需要一个可靠的帮手"],["strategist","pioneer","poet","hero"]],
+["如果项目进度落后，你会？",["重排优先级和资源","调整目标，保留弹性","检查流程，找出可改进处","主动沟通并推动协作"],["strategist","wanderer","artisan","host"]],
+["你对竞争的态度是？",["先了解规则和对手","不太执着于输赢","专注把自己的事做好","愿意迎难而上证明自己"],["strategist","wanderer","artisan","hero"]],
+["哪种小确幸最能让你开心？",["计划顺利推进","偶遇一处漂亮风景","读到一句喜欢的话","亲手完成一件作品"],["strategist","wanderer","poet","artisan"]],
+["当别人提出与你不同的观点，你会？",["比较证据与逻辑","好奇对方为何这样想","先感受表达背后的情绪","坦率表达自己的立场"],["strategist","pioneer","host","hero"]],
+["你更喜欢怎样学习？",["先搭建完整知识框架","通过探索和实践学习","反复打磨直到熟练","与人交流、互相启发"],["strategist","pioneer","artisan","host"]],
+["一件事情没有明确答案时，你会？",["收集更多信息再判断","接受不确定，先体验","给自己时间沉淀感受","选一个方向先行动"],["strategist","wanderer","hermit","pioneer"]],
+["你最希望别人记住你的哪一点？",["可靠、有判断力","有趣、活得自在","细腻、有审美","真诚、说到做到"],["strategist","wanderer","poet","hero"]],
+["看到一处老建筑，你会先注意？",["它的结构和历史脉络","周围街巷和生活气息","光影、纹样与颜色","工艺细节和材料"],["strategist","wanderer","poet","artisan"]],
+["面对重复而琐碎的工作，你会？",["优化流程提高效率","穿插新方法保持新鲜","耐心做好每个细节","和伙伴分工互相支持"],["strategist","pioneer","artisan","host"]],
+["你如何看待独处？",["适合复盘和思考","能让我恢复自由感","是灵感出现的时刻","偶尔需要，但也珍惜陪伴"],["strategist","wanderer","poet","host"]],
+["遇到值得争取的机会，你会？",["评估投入产出再决定","先体验，不想错过","做好准备后稳步争取","主动表达，争取先机"],["strategist","wanderer","artisan","pioneer"]],
+["你更偏爱哪种交流？",["观点清晰、信息充分","轻松自然、不设限制","有深度，也有情感温度","坦诚直接、少些客套"],["strategist","wanderer","poet","hero"]],
+["看到朋友被不公平对待，你会？",["先弄清事实和规则","陪伴支持，尊重他的选择","安慰对方，照顾情绪","明确表达立场并出面相助"],["strategist","host","poet","hero"]],
+["你对一件作品的满意标准是？",["结构完整、逻辑清楚","有新意，不落俗套","能打动人，有独特表达","细节扎实，经得起推敲"],["strategist","pioneer","poet","artisan"]],
+["临近休息日，你最期待？",["把积压事项清空","来一场说走就走的小出行","安静阅读或听音乐","和朋友吃顿舒服的饭"],["artisan","wanderer","hermit","host"]],
+["当你发现自己做错了事，你会？",["分析原因，建立预防机制","不困在懊恼里，继续向前","认真反思自己的感受和动机","及时道歉并采取补救行动"],["strategist","wanderer","hermit","hero"]],
+["如果能为生活增加一项能力，你会选？",["洞察全局、判断趋势","快速适应陌生环境","把想法变成美好作品","凝聚伙伴、推动改变"],["strategist","pioneer","artisan","host"]]
+];
+let answers = new Array(raw.length).fill(null), index = 0;
+const $ = id => document.getElementById(id);
+function start(){answers.fill(null);index=0;$("home").classList.add("hide");$("result").classList.add("hide");$("quiz").classList.remove("hide");render();window.scrollTo({top:0,behavior:"smooth"});}
+function render(){
+ const q=raw[index];$("counter").textContent=String(index+1).padStart(2,"0")+" / 40";$("qnum").textContent="QUESTION "+String(index+1).padStart(2,"0");$("bar").style.width=((index+1)/raw.length*100)+"%";$("question").textContent=q[0];$("options").innerHTML="";
+ q[1].forEach((label,i)=>{const b=document.createElement("button");b.className="option";b.innerHTML="<b>"+String.fromCharCode(65+i)+"</b>";b.append(document.createTextNode(label));b.addEventListener("click",()=>choose(i));$("options").appendChild(b);});
+ $("prev").style.visibility=index===0?"hidden":"visible";
+}
+function choose(i){answers[index]=i;if(index<raw.length-1){index++;render();}else showResult();}
+function showResult(){
+ const scores={};Object.keys(types).forEach(k=>scores[k]=0);
+ answers.forEach((a,i)=>{if(a!==null)scores[raw[i][2][a]]+=1;});
+ const ranked=Object.entries(scores).sort((a,b)=>b[1]-a[1]);
+ // Stable tie-break: use the first encountered highest-scoring archetype in the answer sequence.
+ let winner=ranked[0][0];if(ranked.length>1&&ranked[0][1]===ranked[1][1]){for(let i=0;i<answers.length;i++){const k=raw[i][2][answers[i]];if(scores[k]===ranked[0][1]){winner=k;break;}}}
+ const t=types[winner];$("resultIcon").textContent=t.icon;$("resultName").textContent=t.name;$("tagline").textContent=t.tag;$("quote").textContent=t.quote;$("traits").textContent=t.traits;$("reason").textContent=t.reason;$("strength").textContent=t.strength;$("easter").textContent=t.easter;
+ $("quiz").classList.add("hide");$("result").classList.remove("hide");$("shareHint").textContent="你的主导倾向："+t.name+" · 可截图保存，分享你的古风人格。";window.scrollTo({top:0,behavior:"smooth"});
+}
+$("start").addEventListener("click",start);$("again").addEventListener("click",start);
+$("prev").addEventListener("click",()=>{if(index>0){index--;render();}});
+$("share").addEventListener("click",async()=>{const name=$("resultName").textContent;const text=`我的古风人格是「${name}」！\n${$("tagline").textContent}\n${$("quote").textContent}\n来测测你的灵魂是哪种中国古风人格。`;try{await navigator.clipboard.writeText(text);$("shareHint").textContent="已复制结果文案，快去分享吧！";}catch(e){$("shareHint").textContent="当前浏览器不允许自动复制，请截图保存结果页面。";}});
+</script>
+</body>
+</html>
