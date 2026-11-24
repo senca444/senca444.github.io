@@ -47,6 +47,11 @@ h1{font-size:clamp(30px,6vw,54px);line-height:1.28;letter-spacing:3px;margin:22p
 .quote{border-left:3px solid var(--gold);padding:12px 18px;background:#f6f1e7;font-size:18px;line-height:1.8;margin:25px 0}
 .result-actions{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-top:30px;position:relative;z-index:1}
 .btn.secondary{background:transparent;color:var(--jade);border:1px solid var(--jade)}
+
+.poster-tools{position:relative;z-index:1;max-width:520px;margin:28px auto 0;padding:18px;background:#f5efe2;border:1px solid #d8c49b}
+.poster-preview-title{color:#315b50;letter-spacing:2px;font-size:14px;margin-bottom:14px}
+#posterCanvas{display:block;width:100%;height:auto;border:1px solid #d7c7a8;box-shadow:0 10px 28px #403b2b22;background:#f8efdc}
+
 .foot{text-align:center;color:#999487;font-size:11px;letter-spacing:2px;margin-top:26px}
 @media(max-width:600px){.shell{width:calc(100% - 20px);padding-top:16px}.topline{letter-spacing:1px}.options{grid-template-columns:1fr;gap:9px}.option{min-height:65px;padding:14px}.quiz{padding:22px 18px}.progress{margin-bottom:28px}.controls{margin-top:22px}.hero{padding:42px 22px}.result{padding:28px 20px}.result-copy{text-align:left}}
 @media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
@@ -89,8 +94,18 @@ h1{font-size:clamp(30px,6vw,54px);line-height:1.28;letter-spacing:3px;margin:22p
     <div class="result-actions">
       <button class="btn" id="again">再测一次</button>
       <button class="btn secondary" id="share">复制结果文案</button>
+      <button class="btn secondary" id="makePoster">生成专属海报</button>
     </div>
-    <div class="note" id="shareHint">小提示：可截图保存，分享你的古风人格。</div>
+    <div class="poster-tools hide" id="posterTools">
+      <div class="poster-preview-title">你的国潮人格海报已生成</div>
+      <canvas id="posterCanvas" width="1080" height="1440" aria-label="古风人格分享海报"></canvas>
+      <div class="result-actions">
+        <button class="btn" id="downloadPoster">保存 PNG 海报</button>
+        <button class="btn secondary" id="closePoster">收起预览</button>
+      </div>
+      <div class="note">二维码已固定指向 https://senca444.github.io/ ，朋友扫码即可参与测试。</div>
+    </div>
+    <div class="note" id="shareHint">小提示：可生成专属海报，保存后分享你的古风人格。</div>
   </section>
   <div class="foot">仅供趣味娱乐 · 不构成心理测评或人格诊断</div>
 </main>
@@ -167,6 +182,79 @@ function showResult(){
 }
 $("start").addEventListener("click",start);$("again").addEventListener("click",start);
 $("prev").addEventListener("click",()=>{if(index>0){index--;render();}});
+
+const posterQr = new Image();
+posterQr.src = "data:image/png;base64,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";
+function drawPoster(){
+  const canvas = $("posterCanvas"), ctx = canvas.getContext("2d");
+  const t = types[Object.keys(types).find(k => types[k].name === $("resultName").textContent)] || types.strategist;
+  const W=1080,H=1440;
+  ctx.clearRect(0,0,W,H);
+  // Warm paper base and bold guochao color blocks.
+  const bg=ctx.createLinearGradient(0,0,W,H); bg.addColorStop(0,"#fff6df"); bg.addColorStop(1,"#ead7b5");
+  ctx.fillStyle=bg; ctx.fillRect(0,0,W,H);
+  ctx.fillStyle="#b8322b"; ctx.beginPath(); ctx.arc(920,170,220,0,Math.PI*2); ctx.fill();
+  ctx.fillStyle="#173d37"; ctx.beginPath(); ctx.arc(80,1190,250,0,Math.PI*2); ctx.fill();
+  ctx.fillStyle="#d6a94e"; ctx.beginPath(); ctx.arc(1000,1120,125,0,Math.PI*2); ctx.fill();
+  // Inner frame and corner marks.
+  ctx.strokeStyle="#9c3029"; ctx.lineWidth=5; ctx.strokeRect(42,42,W-84,H-84);
+  ctx.strokeStyle="#c49a4d"; ctx.lineWidth=2; ctx.strokeRect(62,62,W-124,H-124);
+  ctx.fillStyle="#9c3029"; ctx.font="bold 30px sans-serif"; ctx.textAlign="center";
+  ctx.fillText("东方性格图鉴  ·  PERSONALITY ATLAS",W/2,132);
+  ctx.fillStyle="#183d36"; ctx.font="bold 62px sans-serif";
+  ctx.fillText("你的灵魂画像",W/2,230);
+  // Red seal.
+  ctx.save(); ctx.translate(900,305); ctx.rotate(0.12); ctx.fillStyle="#b8322b"; ctx.fillRect(-65,-65,130,130);
+  ctx.fillStyle="#fff1d5"; ctx.font="bold 48px sans-serif"; ctx.fillText("闲趣",0,16); ctx.restore();
+  // Archetype emblem.
+  ctx.fillStyle="#fdf4df"; ctx.beginPath(); ctx.arc(W/2,440,125,0,Math.PI*2); ctx.fill();
+  ctx.strokeStyle="#bd8b3e"; ctx.lineWidth=7; ctx.stroke();
+  ctx.fillStyle="#b8322b"; ctx.font="110px sans-serif"; ctx.fillText(t.icon,W/2,478);
+  ctx.fillStyle="#173d37"; ctx.font="bold 92px sans-serif"; ctx.fillText(t.name,W/2,625);
+  ctx.fillStyle="#a12e27"; ctx.font="bold 38px sans-serif"; ctx.fillText(t.tag,W/2,700);
+  // Quote panel.
+  ctx.fillStyle="#fff9e9"; ctx.fillRect(112,760,856,150);
+  ctx.strokeStyle="#bd8b3e"; ctx.lineWidth=3; ctx.strokeRect(112,760,856,150);
+  ctx.fillStyle="#6b4b2d"; ctx.font="34px sans-serif"; wrapCanvasText(ctx,t.quote,W/2,820,790,52);
+  // Personality copy.
+  ctx.textAlign="left"; ctx.fillStyle="#9c3029"; ctx.font="bold 34px sans-serif"; ctx.fillText("性格画像",120,990);
+  ctx.fillStyle="#354c40"; ctx.font="30px sans-serif"; wrapCanvasText(ctx,t.traits,120,1045,820,48,4);
+  // QR panel.
+  ctx.fillStyle="#fffaf0"; ctx.fillRect(770,1110,210,230);
+  if(posterQr.complete && posterQr.naturalWidth) ctx.drawImage(posterQr,790,1128,170,170);
+  ctx.textAlign="center"; ctx.fillStyle="#183d36"; ctx.font="bold 24px sans-serif"; ctx.fillText("扫码再测一次",875,1320);
+  ctx.textAlign="left"; ctx.fillStyle="#fff4dc"; ctx.font="22px sans-serif"; ctx.fillText("测测你的灵魂是哪种中国古风人格",105,1372);
+  ctx.fillStyle="#183d36"; ctx.font="20px sans-serif"; ctx.textAlign="center"; ctx.fillText("senca444.github.io",W/2,1410);
+}
+function wrapCanvasText(ctx,text,x,y,maxWidth,lineHeight,maxLines=3){
+  let line="", lines=[];
+  for(const ch of text){
+    const test=line+ch;
+    if(ctx.measureText(test).width>maxWidth && line){ lines.push(line); line=ch; } else line=test;
+  }
+  if(line) lines.push(line);
+  lines=lines.slice(0,maxLines);
+  lines.forEach((s,i)=>ctx.fillText(s,x,y+i*lineHeight));
+}
+$("makePoster").addEventListener("click",()=>{
+  $("posterTools").classList.remove("hide");
+  if(posterQr.complete) drawPoster(); else posterQr.onload=drawPoster;
+  $("shareHint").textContent="海报已生成，点击“保存 PNG 海报”即可下载。";
+  $("posterTools").scrollIntoView({behavior:"smooth",block:"start"});
+});
+$("downloadPoster").addEventListener("click",()=>{
+  drawPoster();
+  $("posterCanvas").toBlob(blob=>{
+    if(!blob){ $("shareHint").textContent="生成图片失败，请重试。"; return; }
+    const url=URL.createObjectURL(blob), a=document.createElement("a");
+    const name=$("resultName").textContent || "古风人格";
+    a.href=url; a.download=name+"_国潮人格海报.png"; document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(()=>URL.revokeObjectURL(url),1500);
+    $("shareHint").textContent="海报已保存到设备。";
+  },"image/png");
+});
+$("closePoster").addEventListener("click",()=> $("posterTools").classList.add("hide"));
+
 $("share").addEventListener("click",async()=>{const name=$("resultName").textContent;const text=`我的古风人格是「${name}」！\n${$("tagline").textContent}\n${$("quote").textContent}\n来测测你的灵魂是哪种中国古风人格。`;try{await navigator.clipboard.writeText(text);$("shareHint").textContent="已复制结果文案，快去分享吧！";}catch(e){$("shareHint").textContent="当前浏览器不允许自动复制，请截图保存结果页面。";}});
 </script>
 </body>
